@@ -1,0 +1,12 @@
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.exe.config
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.exe
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.pdb
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.xml
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.vbprojResolveAssemblyReference.cache
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsApplication1.Resources.resources
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.vbproj.GenerateResource.Cache
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.exe
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.xml
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.pdb
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsApplication1.MainWindow.resources
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsApplication1.Monitor.resources

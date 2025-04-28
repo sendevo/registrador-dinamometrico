@@ -1,0 +1,16 @@
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.exe.config
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.exe
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.pdb
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\bin\Debug\WindowsRegistrador.xml
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsApplication1.MainWindow.resources
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsApplication1.Monitor.resources
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsApplication1.Resources.resources
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\RegistradorInta.vbproj.GenerateResource.Cache
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.exe
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.xml
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsRegistrador.pdb
+M:\Dropbox\Registrador\VisualBasic\WindowsRegistrador\WindowsRegistrador\obj\Debug\WindowsApplication1.DateTime.resources
+M:\Dropbox\Registrador\SoftwareRegistradorVB\SoftwareRegistradorINTA\SoftwareRegistradorINTA\bin\Debug\WindowsRegistrador.exe.config
+M:\Dropbox\Registrador\SoftwareRegistradorVB\SoftwareRegistradorINTA\SoftwareRegistradorINTA\obj\Debug\WindowsRegistrador.exe
+M:\Dropbox\Registrador\SoftwareRegistradorVB\SoftwareRegistradorINTA\SoftwareRegistradorINTA\obj\Debug\WindowsRegistrador.xml
+M:\Dropbox\Registrador\SoftwareRegistradorVB\SoftwareRegistradorINTA\SoftwareRegistradorINTA\obj\Debug\WindowsRegistrador.pdb

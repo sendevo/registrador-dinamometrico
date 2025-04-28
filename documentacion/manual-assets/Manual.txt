@@ -1,0 +1,224 @@
+Manual de instrucciones
+
+Registrador LSD-INTA
+
+Registrador para mediciones de rendimiento en maquinaria agrícola           5/12-2015
+
+Contenido
+1.- Aplicaciones...........................................
+2.- Descripcion del instrumento............................
+	2.1.- Lista de partes....................................
+	2.2.- Nociones del funcionamiento........................
+3.- Operación..............................................
+	3.1.- Preparación........................................
+	3.2.- Medición...........................................
+	3.3.- Registros..........................................
+4.- Software...............................................
+	4.1.- Instalación........................................
+	4.2.- Conexión a la PC...................................
+	4.3.- Descarga de registros..............................
+	4.4.- Eliminación de registros...........................
+	4.5.- Configuración de fecha y hora......................
+	4.6.- Monitor de celdas..................................
+	4.7.- Avanzado...........................................
+5.- Mantenimiento..........................................
+	5.1.- Pila 3.3V..........................................
+	5.2.- Memoria micro SD...................................
+	5.3.- Conectores y cables................................
+		5.3.1.- Alimentación...................................
+		5.3.2.- Celdas de carga................................
+		5.3.3.- Sensores inductivos............................
+		5.3.4.- Pulsador.......................................
+		5.3.5.- Comunicación...................................
+6.- Solución de problemas..................................
+7.- Datos técnicos.........................................
+
+
+
+
+
+1.- Aplicaciones
+El Registrador LSD-INTA es un instrumento de medición de rendimiento para maquinaria agrícola que permite medir y registrar los datos con 4 canales para transductores de fuerza como celdas de carga y realizar el conteo de pulsos en 5 canales a través de sesores inductivos. 
+Este dispositivo posee una memoria de almacenamiento permanente de capacidad extendible con la cual es posible guardar hasta 1000 registros en formato de texto plano.
+Mediante el software para PC compatible con sistemas operativos Windows o Linux es posible descargar los registros a una PC mediante conexión USB para el posterior análisis de los datos.
+
+
+2.- Descripcion del instrumento
+	2.1.- Lista de partes
+		1.- Registrador
+		2.- Cable de alimentacion
+		3.- Cable USB para conexión a PC
+		4.- Pulsador
+		5.- CD
+	2.2 Nociones del funcionamiento
+	  -Diagrama de bloques-  
+	  El Registrador consiste de un microcontrolador encargado de coordinar las tareas de lectura de esfuerzo de la maquinaria a través de las celdas de carga, conteo de pulsos eléctricos enviados por los sensores inductivos, lectura de la fecha y hora de un módulo RTC y escritura de toda la información en registros de texto en una memoria microSD mediante el módulo correspondiente.
+	  Las celdas de carga poseen en su interior galgas extensiométricas que convierten la deformación de su estructura, debido a las fuerzas que actúan sobre la celda, en señales eléctricas de bajo voltaje. Estos voltajes son multiplicados por un factor de ganancia a través de amplificadores de instrumentación y luego convertidos a valores numéricos mediante un conversor analógico digital que forma parte del microcontrolador.
+	  Los sensores inductivos actúan como una llave que se cierra (o abre) al aproximarle una pieza metálica de hierro. Debido a que requieren un voltaje de excitación elevado comparado con el nivel de tensión empleado por los contadores del microcontrolador, se utiliza una etapa de optoacopladores para aislar el voltaje de excitación y la entrada digital del microcontrolador.
+	  Mediante un pulsador es posible iniciar o detener el proceso de registro de datos las veces que se desee, con un límite másximo de 1000 registros distintos. En caso de superarse este límite, el Registrador sobreescribirá el último registro en cada nueva grabación.
+	  El microcontrolador puede comunicarse con una PC mediante una conexión USB, el controlador correspondiente y la aplicación desarrollada con el propósito de facilitar su manejo por parte del usuario. Desde el programa se puede enviar una solicitud de listado de archivos, con lo cual el microcontrolador, realizando una lectura de la memoria microSD, responderá con la lista de registros, sus nombres de archivo y el tamaño en bytes de cada uno. La aplicación de la PC, que ahora dispone de la información sobre los archivos presentes en la memoria del Registrador, puede solicitar la descarga de un registro determinado y de esta manera el microcontrolador responderá listando el archivo correspondiente. Por último el programa pedirá al usuario que indique un directorio para guardar el registro importado. Siguiendo un mecanismo similar es posible solicitar al Registrador que elimine un archivo de medición determinado.
+	  Otra funcionalidad es la del monitoreo de las celdas de carga, con la cual la aplicación de la PC solicita constantemente al Registrador que le retorne la lectura de los canales de medición correspondientes.
+	  Por último, para realizar la configuración de fecha y hora del RTC del Registrador, el usuario debe indicar este dato mediante la interface de usuario de la PC que luego enviará dicha información al Registrador, luego el microcontrolador se encargará de actualizar la hora del módulo RTC automáticamente.
+
+		
+3.- Operación
+	
+	3.1.- Preparación
+		Para preparar el Registrador para efectuar mediciones y registro de datos, siga los pasos a continuación:
+		1.- Conecte el pulsador al Registrador mediante el conector (6). 
+		2.- Conecte la/s celda/s de carga en el/los conector/es (2) y el/los sensor/es inductivo/s en el/los conector/es (3). Si desea medir pulsos de alta frecuencia utilice el canal B5.
+		3.- Conecte el cable de alimentación al conector (5).
+		4.- Conecte las pinzas del cable de alimentación a los bornes de la batería de 12V. El led (1) debe indicar que el Registrador está encendido.
+		5.- Para apagar el Registrador, desconecte el cable de alimentación.	
+	
+	3.2.- Medición
+	Una vez conectado y encendido el Registrador, puede iniciar las mediciones siguiendo los pasos a continuación:
+		1.- Para iniciar el registro de datos presione el botón del pulsador. Cuando el Registrador inicie la grabación, se encenderá el led (7) del pulsador. 
+		2.- Para detener la medición presione nuevamente el pulsador. El led (7) indicador del pulsador debe apagarse.
+		3.- Repita los pasos 1 y 2 tantas veces como desee para realizar nuevas mediciones. Asegúrese de dejar el pulsador apagado antes de desconectarlo del Registrador.
+	
+	3.3.- Registros
+		Al iniciar la grabación de datos el Registrador toma 2 muestras por segundo y registra la medición en un archivo de texto plano que inicia con una estampa de tiempo que contiene la fecha y hora en la que se inició la medición y a continuación se concatenan los datos de la medición a una muestra por línea donde cada una contiene el número de muestra, la lectura de los cuatro canales de las celdas de carga y los valores de los 5 contadores de pulso en ese orden.
+		
+		En el siguiente ejemplo se muestra el archivo de registro para una medición iniciada el día 15 de noviembre de 2015 a las 14:35:22 hs. 
+		
+		Ejemplo de registro
+			2015_11_15_14_35_22.txt
+			1 1020 1018 1015 102 1 0 0 0 2 
+			2 1019 1020 1015 345 1 1 0 0 15
+			3 1020 1017 1016 360 2 1 0 0 23
+			4 1018 1017 1018 374 3 3 0 0 31
+			5 1017 1020 1020 378 5 4 0 0 39
+			6 1023 1021 1017 380 6 5 0 0 47
+			7 1022 1017 1018 395 8 7 0 0 56
+			8 1020 1018 1016 415 9 8 0 0 64
+			9 1018 1019 1017 450 10 10 0 0 72
+			10 1017 1021 1020 473 11 12 0 0 81
+			11 1020 1022 1019 481 13 13 0 0 89
+			12 1018 1020 1028 490 14 15 0 0 97
+
+		La medición se efectuó durante al menos 6 segundos, los primeros 3 canales para las celdas de carga se encontraban desconectados por lo cual la lectura es máxima. El cuarto canal para celdas de carga registró un incremento gradual de la fuerza desde el 10% hasta el 48% del valor máximo. Los canales 1 y 2 de los contadores registraron 14 y 15 pulsos respectivamente, los canales 3 y 4 se encontraban desconectados y el canal 5 registró 97 pulsos.
+		
+4.- Software
+	4.1.- Instalación
+
+
+	
+	4.2.- Conexión a la PC
+	Importante: El Registrador debe estar encendido para poder comunicarse con una PC, para ello conecte el Registrador a una fuente de energía de 12V.
+	Importante: La comunicación serie con la PC no puede efectuarse si el Registrador se encuentra grabando un registro. Para estar seguro, desconecte el pulsador del Registrador.
+		1.- Conecte el cable de comunicación al Registrador y a un puerto USB disponible en su PC.
+		2.- Ejecute el software del Registrador.
+		3.- Para habilitar los controles de la interfaz debe conectar el dispositivo a la PC, para esto elija el puerto serie que contenga la descripción "Arduino Uno", por ejemplo "COM8-Arduino UNO (COM8)" y presione el botón "Conectar". En la barra de estado debe aparecer "Solicitando lista de archivos", espere unos segundos hasta que aparezca la lista de los registros en la tabla de la interface.
+		4.- Una vez que aparece la lista de registros en la tabla ya está habilitado para descargar o eliminar los archivos que desee.
+	
+	4.3.- Descarga de registros
+	Los archivos de registro pueden copiarse desde la memoria del Registrador a un directorio de la PC todas las veces que desee. Para descargar un registro a la PC siga los siguientes pasos:
+		1.- Seleccione, haciendo click, el nombre del archivo en la tabla que contiene la lista de registros.
+		2.- Si desea, puede cambiar el nombre del archivo haciendo doble click sobre el nombre actual del registro y editando el texto.
+		3.- Haga click en el botón de descarga. 
+		4.- Inmediatamente aparecerá una ventana de diálogo en la que podrá seleccionar el directorio donde desee guardar el archivo. 
+		5.- Al aceptar debe mostrarse una barra de progreso de la descarga en la parte inferior de la ventana del programa.
+		6.- Si desea descargar más de un archivo a la vez, seleccione varios registros de la lista manteniendo apretado la tecla "Cntrl".
+		7.- Con la tecla "Shift" puede seleccionar una lista de archivos consecutivos haciendo click en el primer y último registro.
+	
+	4.4.- Eliminación de registros
+	Los archivos de registro pueden eliminarse de la memoria del Registrador luego de haber sido descargados o en caso de no necesitarse más. Importante: Esta acción eliminará definitivamente el archivo de registro de la memoria del dispositivo.
+		1.- Para eliminar un archivo de registro seleccione el nombre del archivo de la tabla que contiene la lista.
+		2.- Haga click en el botón de borrar registro. 
+		3.- Se abrirá una ventana de diálogo pidiendo confirmación para eliminar el/los archivo/s seleccionado/s.
+		4.- Si desea eliminar más de un archivo a la vez, seleccione varios registros de la lista manteniendo apretado la tecla "Cntrl" y a continuación haga click en el botón de borrar registro.
+		5.- Con la tecla "Shift" puede seleccionar una lista de archivos consecutivos haciendo click en el primer y último registro.
+	
+	4.5.- Configuración de fecha y hora
+	La fecha y hora del reloj del Registrador puede actualizarse desde la PC en caso de agotamiento o recambio de la pila. Para que el reloj se mantenga en hora cuando el Registrador se encuentre apagado, la pila debe tener carga. Para sincronizar la hora del Registrador con la hora del sistema o la hora que desee siga los siguientes pasos:
+		1.- Presione el botón de ajuste de fecha y hora.
+		2.- A continuación aparecerá una ventana de diálogo con la fecha y hora del sistema. Si lo desea puede modificar cualquier dato haciendo click en los selectores.
+		3.- Presione aceptar para sincronizar el reloj del dispositivo con la información que se muestra en la ventana de diálogo.
+	
+	4.6.- Monitor de celdas
+	Para realizar tareas de calibración de las celdas de carga o simplemente efectuar una lectura de los valores de los canales correspondientes a las celdas de carga es posible visualizar estos datos desde la interfaz del programa sin tener que realizar una medición ni registrar los valores en la memoria del Registrador. Para conocer los valores de los canales del Registrador siga los siguientes pasos:
+		1.- Presione el botón para monitorear celdas de carga.
+		2.- A continuación se mostrará un cuadro de diálogo con la lectura de los cuatro canales del Registrador donde se muestran cuatro barras de progreso con el porcentaje de la lectura de voltajes analógicos y también el valor discreto en la escala de 0 a 1023. Estos valores se actualizan una vez por segundo.
+
+	4.7.- Avanzado
+	La comunicación del Registrador con la PC se realiza mediante comunicación RS232 emulada por USB. Mediante el controlador y una aplicación correspondiente es posible enviar comandos al Registrador si no se dispone del programa desarrollado para este producto. En la siguiente tabla se listan los comandos con sus funciones correspondientes.
+
+	Comando 				Función	
+	"a\n" 					Solicitud de lista de registros
+	"bLOG_xxx\n" 			Solicitud de descarga del registro número xxx
+	"cLOG_xxx\n"            Solicitud de eliminación del registro número xxx
+	"exxxxxxxxxxxxxx\n" 	Actualizar la fecha y hora
+	"r\n" 					Solicitud de lectura de celdas de carga
+
+	Ejemplo
+	---
+	"bLOG_008\n"
+	"cLOG_034\n"
+	"e20150914103826\n"
+	---
+
+	Ack
+	"%%EOL%%"
+	"##EOF##"
+	"$$EOD$$"
+	---
+	"&&EOW&&"
+
+	
+5.- Mantenimiento
+
+	5.1.- Pila 3.3V
+	Para mantener el reloj en hora, el Registrador requiere una pila de tipo botón RS2032. Si luego de apagar el Registrador la hora se desactualiza, debe reemplazar la pila. Para esto levante la tapa de la carcasa del Registrador quitando los cuatro tornillos que la sujetan, la pila está ubicada según se muestra en la figura (9).
+	
+	5.2.- Memoria micro SD
+	En caso de necesitar extraer o reemplazar la tarjeta de memoria del Registrador, remueva la tapa de la carcasa quitando los cuatro tornillos que la sujetan. La memoria micro SD está ubicada según se muestra en la figura (10) y para extraerla debe presionar la tarjeta de modo de que se libere la traba del zócalo metálico.
+
+	5.3.- Conectores y cables
+	Para el reemplazo de conectores, sensores o cables debe prestarse atención al esquema de conexionado de los mismos que a continuación se detalla para cada caso: 
+		5.3.1.- Alimentación
+		5.3.2.- Celdas de carga
+		5.3.3.- Sensores inductivos
+		5.3.4.- Pulsador
+		5.3.5.- Comunicación
+
+6.- Solución de problemas
+
+	No aparece el Registrador en la lista de puertos: Compruebe que el cable USB esté correctamente conectado a la PC y al Registrador. Intente desconectar y volver a conectar el cable. Compruebe que el Registrador se encuentra conectado a una fuente de energía y encendido. Verifique que el controlador o driver funcione correctamente desde la configuración de la PC.
+
+	Al presionar "Conectar" nunca aparece la lista de registros: Asegúrese de que el cable USB no se haya desconectado de la PC ni del Registrador. Compruebe que el Registrador sigue conectado a una fuente de energía y está encendido.
+
+	Al presionar "Descargar" no se inicia la descarga: Asegúrese de que el cable USB no se haya desconectado de la PC ni del Registrador. Compruebe que el Registrador sigue conectado a una fuente de energía y está encendido.
+
+	La hora del Registrador se desactualiza luego de apagarlo: Reemplace la pila del Registrador siguiendo las instrucciones del ítem 5.1 en la sección Mantenimiento.
+
+	El monitor de celda de carga no muestra valores esperados: Para que los valores mostrados se actualicen, la ventana del monitor de celdas de carga debe tener foco, haga click en cualquier parte de esta ventana. Asegúrese de que el cable USB no se haya desconectado de la PC ni del Registrador. Compruebe que el Registrador sigue conectado a una fuente de energía y está encendido. Verifique que los conectores de las celdas de carga están correctamente conectados al Registrador y los conductores internos del conector estén bien soldados. Con la/s celda/s de carga/s sin ser sometida/s a esfuerzos de tracción y conectada/s al Registrador, la lectura debe ser inferior al 1%, compruebe que la sensibilidad de las celdas de carga en mV/V multiplicado por 2590V no sea mayor a 5.5V.
+
+	Uno o más contadores de pulso no mide correctamente: Compruebe que los sensores inductivos se activan adecuadamente durante la medición. Asegúrese de los conectores de los sensores inductivos están correctamente conectados al Registrador y los conductores internos del conector estén bien soldados. Tenga en cuenta que frecuencias superiores a 250 pulsos por segundo en simultáneo en todos los canales de contadores de pulso puede ocasionar incremento del error de medición.
+
+
+
+7.- Datos técnicos
+
+Alimentación:
+Tensión de alimentación:               Min. = 9V, Típico = 12V, Max. = 24V.
+Consumo de corriente:                  Min. = ~, Típico = 600mA, Max. = 1A.
+Pila:                                  RS2032 3.3V
+
+Canales de celdas de carga:
+Cantidad de canales:                   4.
+Excitación de celdas de carga:         5V regulado.
+Tipo de amplificador:                  INA122P.
+Ganancia de amplificación:             518 (RG = 390 Ohm).
+
+Contadores de pulso:
+Cantidad de canales:                    5.
+Excitación para sensores inductivos:    Vcc - 1.4V no regulado.
+Error:                                  0.13% a 200Hz.
+
+Almacenamiento:
+Tipo de memoria:                        microSDHC.
+Shield adaptador:                       uSD Card Adapter Catalex v1.0.
+Capacidad:                              2Gb.
+Cantidad de registros:                  999.
+Tiempo de grabación:                    5800 hs.
