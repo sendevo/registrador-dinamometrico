@@ -23,18 +23,18 @@ def on_connect_attempt(port, tree):
 
 def app_setup(root, config):
     # Root app setup
-    root.title(config.title)
+    root.title(config["title"])
     root.withdraw()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-    width_prop = config.dimensions[0]
-    height_prop = config.dimensions[1]
+    width_prop = config["dimensions"][0]
+    height_prop = config["dimensions"][1]
     window_width = int(screen_width * width_prop)
     window_height = int(screen_height * height_prop)
     position_x = int((screen_width - window_width) / 2)
     position_y = int((screen_height - window_height) / 2)
     root.geometry(f"{window_width}x{window_height}+{position_x}+{position_y}")
-    root.iconphoto(True, tk.PhotoImage(file = config.icon))
+    root.iconphoto(True, tk.PhotoImage(file = config["icon"]))
     root.deiconify()
     
     # Serial port selection
