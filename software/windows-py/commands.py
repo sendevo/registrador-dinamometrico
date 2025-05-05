@@ -27,10 +27,10 @@ class SerialPortManager:
             self.serial_port = serial.Serial(port, self.baudrate, timeout=self.timeout)
             if self.serial_port.is_open:
                 print(f"Conectado a {port} a {self.baudrate} bps")
+                return True
             else:
                 print(f"Puerto {port} cerrado")
                 return False
-            return True
         except serial.SerialException as e:
             print(f"Error connecting to {port}: {e}")
             return False
@@ -56,6 +56,12 @@ class SerialPortManager:
 
     def get_logs_list(self):
         print("Solicitando lista de registros...")
+        logs = [
+            ("LOG_01", "Registro 1", "5125"),
+            ("LOG_02", "Registro 2", "151"),
+            ("LOG_03", "Registro 3", "1423")
+        ]
+        return logs
 
     def download_log(self, log_number):
         print(f"Solicitando descarga del registro número {log_number}...")
