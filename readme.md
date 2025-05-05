@@ -16,7 +16,7 @@ Se incluye el software para la configuración del registrador:
 ## Esquema de bloques genérico
 !["alt"](documentacion/manual-assets/Diagrama.png)
 
-## Placa mother
+## Placa madre
 !["alt"](documentacion/fotos/IMG_20151201_174024.jpg)
 
 ## Circuito de celdas de carga
