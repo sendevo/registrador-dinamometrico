@@ -17,5 +17,4 @@ root.geometry("{}x{}+{}+{}".format(
 
 root.iconphoto(True, tk.PhotoImage(file = constants.icon_path))
 
-
 root.mainloop()
