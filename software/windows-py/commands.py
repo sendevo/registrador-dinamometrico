@@ -75,6 +75,7 @@ class SerialPortManager:
             self.serial_port.close()
             self.serial_port = None
             self.debug_logger("Desconectado del puerto serie", "info")
+            return True
         else:
             self.debug_logger("No hay conexión activa")
         return False
@@ -86,7 +87,7 @@ class SerialPortManager:
         if self.serial_port and self.serial_port.is_open:
             try:
                 self.serial_port.write(b"a\n")
-                max_attempts = 10
+                max_attempts = 5
                 attempts = 0
                 while True and not self.abort_flag:
                     log = self.serial_port.readline().decode('utf-8').strip()
