@@ -21,7 +21,25 @@ class SerialPortManager:
         self.baudrate = 19200
         self.timeout = 1
         self.serial_port = None
-        
+        self.abort_flag = False
+    
+
+    def debug_logger(self, message, type="info"):
+        if type == "info":
+            print(f"INFO: {message}")
+        elif type == "error":
+            print(f"ERROR: {message}")
+        elif type == "debug":
+            print(f"DEBUG: {message}")
+        else:
+            print(f"UNKNOWN TYPE: {type} - {message}")
+
+
+    def set_abort_flag(self, flag):
+        self.abort_flag = flag
+        if flag:
+            self.debug_logger("Abortando operación actual...")
+
 
     def find_arduino_port(self):
         ports = serial.tools.list_ports.comports()
@@ -29,7 +47,7 @@ class SerialPortManager:
             desc = port.description.lower()
             if "arduino" in desc or "ch340" in desc:
                 return port.device  
-        print("Arduino no encontrado, usando el primer puerto disponible")
+        self.debug_logger("Arduino no encontrado, usando el primer puerto disponible")
         return ports[0].device if ports else None
             
 
@@ -42,13 +60,13 @@ class SerialPortManager:
         try:
             self.serial_port = serial.Serial(port, self.baudrate, timeout=self.timeout)
             if self.serial_port.is_open:
-                print(f"Conectado a {port} a {self.baudrate} bps")
+                self.debug_logger(f"Conectado a {port} a {self.baudrate} bps", "info")
                 return True
             else:
-                print(f"Puerto {port} cerrado")
+                self.debug_logger(f"Puerto {port} cerrado", "info")
                 return False
         except serial.SerialException as e:
-            print(f"Error connecting to {port}: {e}")
+            self.debug_logger(f"No se pudo conectar al puerto {port}: {e}", "error")
             return False
 
 
@@ -56,46 +74,107 @@ class SerialPortManager:
         if self.serial_port and self.serial_port.is_open:
             self.serial_port.close()
             self.serial_port = None
-            print("Desconectado del puerto serie")
+            self.debug_logger("Desconectado del puerto serie", "info")
         else:
-            print("No hay conexión activa")
+            self.debug_logger("No hay conexión activa")
         return False
 
 
     def get_logs_list(self):
-        print("Solicitando lista de registros...")
+        self.debug_logger("Solicitando lista de registros...")
         logs = []
         if self.serial_port and self.serial_port.is_open:
             try:
                 self.serial_port.write(b"a\n")
-                while True:
+                max_attempts = 10
+                attempts = 0
+                while True and not self.abort_flag:
                     log = self.serial_port.readline().decode('utf-8').strip()
-                    if log == "%%EOL%%":
-                        break
+                    if log == "":
+                        self.debug_logger("Respuesta vacía, esperando...")
+                        attempts += 1
+                        if attempts >= max_attempts:
+                            self.debug_logger("Tiempo de espera agotado al recibir la lista de registros", "info")
+                            break
                     else:
-                        logs.append(log)
-                    
-                print("Lista de registros recibida")
+                        self.debug_logger(f"Registro recibido: {log}")
+                        if log == "%%EOL%%":
+                            break
+                        else:
+                            logs.append(log)
+                        attempts = 0
+                self.debug_logger("Descarga de listado completada")
             except serial.SerialTimeoutException:
-                print("Tiempo de espera agotado al recibir la lista de registros")
+                self.debug_logger("Tiempo de espera de lista de registros agotado", "error")
             except serial.SerialException as e:
-                print(f"Error al recibir la lista de registros: {e}")
+                self.debug_logger(f"Error al recibir la lista de registros: {e}", "error")
         else:
-            print("No hay conexión activa")
+            self.debug_logger("No hay conexión activa")
         return logs
 
 
     def download_log(self, log_number):
-        print(f"Solicitando descarga del registro número {log_number}...")
+        if not self.serial_port or not self.serial_port.is_open:
+            self.debug_logger("No hay conexión activa")
+            return []
+        cmd = f"bLOG_{log_number:03d}\n"
+        self.debug_logger(f"Enviando: {cmd.strip()}")
+        self.serial_port.write(cmd.encode())
+        log_data = []
+        while True:
+            line = self.serial_port.readline().decode("utf-8").strip()
+            if line == "##EOF##":
+                break
+            log_data.append(line)
+            self.debug_logger(f"Recibido: {line}")
+        
+        self.debug_logger(f"Registro {log_number} descargado")
+        return log_data
 
 
     def delete_log(self, log_number):
-        print(f"Solicitando eliminación del registro número {log_number}...")
+        if not self.serial_port or not self.serial_port.is_open:
+            self.debug_logger("No hay conexión activa")
+            return False
+        cmd = f"cLOG_{log_number:03d}\n"
+        self.debug_logger(f"Enviando: {cmd.strip()}")
+        self.serial_port.write(cmd.encode())
+        response = self.serial_port.readline().decode("utf-8").strip()
+        if response == "$$EOD$$":
+            self.debug_logger(f"Registro {log_number} eliminado correctamente", "info")
+            return True
+        else:
+            self.debug_logger(f"Respuesta inesperada: {response}", "error")
+            return False
     
 
     def update_datetime(self, datetime_str):
-        print(f"Actualizando fecha y hora a {datetime_str}...")
+        if not self.serial_port or not self.serial_port.is_open:
+            self.debug_logger("No hay conexión activa")
+            return
+        if len(datetime_str) != 14:
+            self.debug_logger("Formato inválido. Use: AAAAMMDDHHMMSS", "error")
+            return
+        cmd = f"e{datetime_str}\n"
+        self.debug_logger(f"Actualizando reloj: {cmd.strip()}", "info")
+        self.serial_port.write(cmd.encode())
         
 
     def read_load_cells(self):
-        print("Solicitando lectura de celdas de carga...")
+        if not self.serial_port or not self.serial_port.is_open:
+            self.debug_logger("No hay conexión activa")
+            return []
+
+        self.debug_logger("Solicitando lectura de celdas de carga...", "info")
+        self.serial_port.write(b"r\n")
+        readings = []
+
+        while True:
+            line = self.serial_port.readline().decode("utf-8").strip()
+            if line == "&&EOW&&":
+                break
+            readings.append(int(line))
+            self.debug_logger(f"Celda: {line}")
+        
+        self.debug_logger("Lectura finalizada")
+        return readings
