@@ -134,11 +134,11 @@ class SerialPortManager:
         return logs
 
 
-    def download_log(self, log_number):
+    def download_log(self, log_id):
         if not self.serial_port or not self.serial_port.is_open:
             self.debug_logger("No hay conexión activa")
             return []
-        cmd = f"bLOG_{log_number:03d}\n"
+        cmd = f"b{log_id}\n"
         self.debug_logger(f"Enviando: {cmd.strip()}")
         self.serial_port.write(cmd.encode())
         log_data = []
@@ -149,20 +149,20 @@ class SerialPortManager:
             log_data.append(line)
             self.debug_logger(f"Recibido: {line}")
         
-        self.debug_logger(f"Registro {log_number} descargado")
+        self.debug_logger(f"Registro {log_id} descargado")
         return log_data
 
 
-    def delete_log(self, log_number):
+    def delete_log(self, log_id):
         if not self.serial_port or not self.serial_port.is_open:
             self.debug_logger("No hay conexión activa")
             return False
-        cmd = f"cLOG_{log_number:03d}\n"
+        cmd = f"c{log_id}\n"
         self.debug_logger(f"Enviando: {cmd.strip()}")
         self.serial_port.write(cmd.encode())
         response = self.serial_port.readline().decode("utf-8").strip()
         if response == "$$EOD$$":
-            self.debug_logger(f"Registro {log_number} eliminado correctamente", "info")
+            self.debug_logger(f"Registro {log_id} eliminado correctamente", "info")
             return True
         else:
             self.debug_logger(f"Respuesta inesperada: {response}", "error")
