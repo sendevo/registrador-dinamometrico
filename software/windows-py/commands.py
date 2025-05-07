@@ -1,5 +1,7 @@
 import serial
 import serial.tools.list_ports
+import time
+import constants
 
 
 """ Comandos de control del registrador:
@@ -18,9 +20,8 @@ class SerialPortManager:
 
     def __init__(self):
         self.serial_port = None
-        self.baudrate = 19200
+        self.baudrate = constants.serial_baudrate
         self.timeout = 1
-        self.serial_port = None
         self.abort_flag = False
     
 
@@ -45,11 +46,29 @@ class SerialPortManager:
         ports = serial.tools.list_ports.comports()
         for port in ports:
             desc = port.description.lower()
+            vid = f"{port.vid:04X}" if port.vid else None
+            pid = f"{port.pid:04X}" if port.pid else None
+            self.debug_logger(f"Port: {port.device}, VID: {vid}, PID: {pid}")
             if "arduino" in desc or "ch340" in desc:
                 return port.device  
-        self.debug_logger("Arduino no encontrado, usando el primer puerto disponible")
-        return ports[0].device if ports else None
-            
+        self.debug_logger("Arduino no encontrado, buscando por ping...")
+        for port in ports:
+            try:
+                with serial.Serial(port.device, baudrate=self.baudrate, timeout=self.timeout) as ser:
+                    time.sleep(2)
+                    ser.reset_input_buffer()
+                    ser.write(b"a\n")
+                    time.sleep(0.1)
+                    response = ser.readline().decode(errors="ignore").strip()
+                    self.debug_logger(f"Trying {port.device}: '{response}'")
+                    if response:
+                        return port.device
+                    else:
+                        self.debug_logger(f"Sin respuesta de {port.device}, intentando otro puerto")
+            except (serial.SerialException, OSError) as e:
+                continue
+        return None
+
 
     def list_serial_ports(self):
         ports = serial.tools.list_ports.comports()
@@ -83,6 +102,7 @@ class SerialPortManager:
 
     def get_logs_list(self):
         self.debug_logger("Solicitando lista de registros...")
+        time.sleep(2)
         logs = []
         if self.serial_port and self.serial_port.is_open:
             try:
