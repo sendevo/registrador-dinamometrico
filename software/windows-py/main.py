@@ -148,6 +148,7 @@ def set_datetime():
     status_label.config(text=f"Configurando fecha y hora: {combined_datetime_str}")
     datetime_obj = datetime.strptime(combined_datetime_str, "%Y-%m-%d %H:%M")
     formatted_datetime = datetime_obj.strftime("%Y%m%d%H%M%S")
+    serial_port_manager.update_datetime(formatted_datetime)
     print(f"Configure date time: {formatted_datetime}")
     datetime_window.destroy()
 

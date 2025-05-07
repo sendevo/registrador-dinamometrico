@@ -144,22 +144,24 @@ void serialEvent(){ // Interrupcion de puerto serie
             case 'e':{ // Solicitud para ajustar hora
                 //arg = Serial.readStringUntil('\n'); // Leer argumento
                 // Formato de arg debe ser: aaaammddhhmmss
+
+                lcdPrint(0, 0, arg.c_str(), true);
+                
                 int date[6];
-                date[0] = arg.substring(0,4).toInt();
-                date[1] = arg.substring(4,6).toInt();
-                date[2] = arg.substring(6,8).toInt();
-                date[3] = arg.substring(8,10).toInt();
-                date[4] = arg.substring(10,12).toInt();
-                date[5] = arg.substring(12,14).toInt();
-                // Imprimir fecha y hora por LCD
-                lcdPrint(0, 0, "", true);
-                char str[LCD_COLS];
-                String currentDate = "FECHA: " + String(date[2]) + "/" + String(date[1]) + "/" + String(date[0]);
-                String currentTime = "HORA: " + String(date[3]) + ":" + String(date[4]);
-                currentDate.toCharArray(str, currentDate.length());
-                lcdPrint(0, 1, str, false);
-                currentTime.toCharArray(str, currentTime.length());
-                lcdPrint(0, 2, str, false);
+                date[0] = arg.substring(0,4).toInt();   // year
+                date[1] = arg.substring(4,6).toInt();   // month
+                date[2] = arg.substring(6,8).toInt();   // day
+                date[3] = arg.substring(8,10).toInt();  // hour
+                date[4] = arg.substring(10,12).toInt(); // minute
+                date[5] = arg.substring(12,14).toInt(); // second
+                
+                char currentDate[20];
+                char currentTime[20];
+                sprintf(currentDate, "FECHA: %02d/%02d/%04d", date[2], date[1], date[0]);
+                sprintf(currentTime, "HORA: %02d:%02d", date[3], date[4]);
+                
+                lcdPrint(0, 2, currentDate, false);
+                lcdPrint(0, 3, currentTime, false);
                 return;
             }
             case 'r':{ // Solicitud de valores de pines analogicos
