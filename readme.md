@@ -30,3 +30,9 @@ Se incluye el software para la configuración del registrador:
 La nueva versión incluye un display de 20x4 para mostrar estado de las entradas en el caso de requerir mediciones no periódicas. Cuando el switch de activación se enciende, el display indica que el registrador se encuentra en modo de medición y registro de datos.  
 !["alt"](documentacion/fotos/IMG_20230531_140004_sq.jpg)
 
+
+## Creación del ejecutable para windows
+
+```bash
+pyinstaller --onefile --windowed --icon=app_icon.ico --add-data "assets;assets" main.py
+```

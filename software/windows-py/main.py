@@ -2,10 +2,11 @@ import tkinter as tk
 from tkinter import ttk, font, filedialog, simpledialog, messagebox
 from tkcalendar import Calendar, DateEntry
 from datetime import datetime
+import os
+import sys
 import threading
 import constants
-import commands
-from commands import SerialPortManager
+from serial_manager import SerialPortManager
 
 
 serial_port_manager = SerialPortManager()
@@ -274,12 +275,22 @@ def app_setup(app, config):
     root.update()
     root.geometry("")
 
+
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+
 if __name__ == "__main__":     
     app = tk.Tk()
     app_config = {
         "title": constants.app_name,
         "dimensions": constants.window_proportions,
-        "icon": constants.icon_path,
+        "icon": resource_path(constants.icon_path),
     }
     app_setup(app, app_config)
     app.mainloop()

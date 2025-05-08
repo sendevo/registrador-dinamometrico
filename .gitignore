@@ -1,2 +1,5 @@
 software/windows-py/venv/
 software/windows-py/__pycache__/
+software/windows-py/build/
+software/windows-py/dist/
+software/windows-py/main.spec
